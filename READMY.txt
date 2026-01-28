@@ -1,0 +1,32 @@
+We created a basic C++ project that implements a simple mathematical function — integer addition.
+
+Key Components
+
+1. Math Library (MathLib target)
+
+Static library containing sum(int a, int b) function
+Implements integer addition
+
+2. Main Application (MyApp target)
+
+Console program that reads two numbers
+Outputs their sum
+Includes input validation
+
+3. Test Suite (unit_tests target)
+
+Basic addition
+Negative numbers
+Zero handling
+Uses Catch2 framework
+
+Application Usage:
+Enter two numbers: 7 5
+12
+
+build:
+mkdir build
+cd build
+cmake ..
+make
+./bin/MyApp
