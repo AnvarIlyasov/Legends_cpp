@@ -1,0 +1,81 @@
+This is a minimalist CMake project for text analysis. It provides a complete solution for calculating text statistics: line counts, character counts, and word counts.
+
+Project Architecture
+
+The project is built on a modular principle, with each functional component isolated as a separate library (target):
+
+Main Targets (Solution Components):
+
+ReadingLib (add_library(ReadingLib ...))
+
+Component for reading multi-line text
+Implementation: src/reading.cpp
+Interface: include/reading.h
+CountLinesLib (add_library(CountLinesLib ...))
+
+Component for counting lines in text
+Implementation: src/count_lines.cpp
+Interface: include/count_lines.h
+CountSymbolsLib (add_library(CountSymbolsLib ...))
+
+Component for counting characters (excluding newline characters)
+Implementation: src/count_symbols.cpp
+Interface: include/count_symbols.h
+CountWordsLib (add_library(CountWordsLib ...))
+
+Component for counting words in text
+Implementation: src/count_words.cpp
+Interface: include/count_words.h
+MyApp (add_executable(MyApp ...))
+
+Main application
+Uses all library components
+Implementation: src/main.cpp
+unit_tests (add_executable(unit_tests ...))
+
+Executable for unit testing
+Uses Catch2 framework
+Implementation: tests/test_basic.cpp
+
+Component Functionality
+
+reading.cpp:
+
+Reads multi-line text from standard input
+Supports input termination with empty line
+Preserves text structure (newline characters)
+
+count_lines.cpp:
+
+Counts lines based on newline characters (\n)
+Includes empty lines in count
+
+count_symbols.cpp:
+
+Counts total characters
+Excludes newline characters from count
+Works with multi-line text
+
+count_ords.cpp:
+
+Counts words using standard delimiters
+Handles punctuation and special characters
+Ignores consecutive delimiters
+
+Dependencies:
+
+Catch2 v3.4.0: Unit testing framework
+Automatically downloaded via FetchContent
+Located in ${CMAKE_SOURCE_DIR}/external/
+
+
+for example:
+
+Введите ваш текст:
+Hello World!
+This is a test program.
+(нажмите Enter на пустой строке для завершения)
+
+Количество символов: 34
+Количество строк: 2
+Количество слов: 6
