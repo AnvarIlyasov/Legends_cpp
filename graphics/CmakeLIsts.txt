@@ -1,0 +1,48 @@
+cmake_minimum_required(VERSION 3.16)
+project(graphics LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+include(CTest)
+enable_testing()
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+set(CORE_SOURCES
+    src/point.cpp
+    src/exceptions.cpp
+    src/circle.cpp
+    src/rectangle.cpp
+    src/canvas.cpp
+    src/shapeFactory.cpp
+)
+
+add_library(graphics_core ${CORE_SOURCES})
+target_include_directories(graphics_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+add_executable(shapes src/main.cpp)
+target_link_libraries(shapes PRIVATE graphics_core)
+
+if(MSVC)
+    target_compile_options(graphics_core PRIVATE /W4)
+    target_compile_options(shapes PRIVATE /W4)
+else()
+    target_compile_options(graphics_core PRIVATE -Wall -Wextra -Wpedantic)
+    target_compile_options(shapes PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
+target_include_directories(shapes PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+add_executable(graphics_tests tests/test_main.cpp)
+target_link_libraries(graphics_tests PRIVATE graphics_core)
+target_include_directories(graphics_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+if(MSVC)
+    target_compile_options(graphics_tests PRIVATE /W4)
+else()
+    target_compile_options(graphics_tests PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
+add_test(NAME graphics_tests COMMAND graphics_tests)
